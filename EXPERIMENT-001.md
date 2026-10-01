@@ -90,3 +90,26 @@ Experiment 001 documents the initial failure boundary.
 **Result: useful failure.**
 
 The hardware is connected and operational. The missing layer is authorized application access to the USB serial transport.
+
+## Photographic evidence
+
+The following images document the physical hardware and test environment used during Experiment 001.
+
+### ESP32-S3 test hardware
+
+![ESP32-S3 test hardware](IMG_0377.jpeg)
+
+Physical ESP32-S3 hardware used during the Open Device Bridge reference experiment.
+
+### USB-C test configuration
+
+![USB-C test configuration](IMG_0381.jpeg)
+
+Test configuration used to investigate direct communication between the iPad and the ESP32-S3 device.
+
+### iPadOS experiment environment
+
+![iPadOS experiment environment](IMG_0384.jpeg)
+
+iPadOS environment used during Experiment 001, documenting the practical boundary between physical USB-C connectivity and application-level hardware access.
+
