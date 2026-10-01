@@ -2,7 +2,7 @@
 
 ### Connect. Authorize. Interact.
 
-Open Device Bridge (ODB) is an open-source concept for secure, user-authorized access to physical hardware from modern mobile computers.
+Open Device Bridge (ODB) is a project exploring secure, user-authorized access to physical hardware from modern mobile computers.
 
 ## The problem
 
