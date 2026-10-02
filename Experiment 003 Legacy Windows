@@ -1,0 +1,32 @@
+## Host Computer Requirements
+
+For a conventional flashing workflow, the host should provide:
+
+- A supported desktop-class operating system:
+  - Windows 10 or 11
+  - macOS
+  - Linux
+- A USB port capable of data transfer
+- Working support for ESP32-S3 USB Serial/JTAG
+- Ability to expose the device as a usable serial/USB programming interface
+- A browser with Web Serial support, if using the Meshtastic Web Flasher
+- Or native access to Espressif flashing tools such as esptool / Flash Download Tool
+- Permission to install drivers or low-level device support if required
+- Internet access for firmware/tool download, unless files are already available locally
+
+### Practical Baseline
+
+A low-end modern laptop is sufficient.
+
+The task does not require high CPU or RAM performance. Even a modest computer with:
+
+- 4 GB RAM
+- basic dual-core or better processor
+- USB 2.0 or newer
+- Windows 10/11, Linux, or macOS
+
+should be computationally capable of flashing an ESP32-S3.
+
+The critical requirement is not processing power.
+
+The critical requirement is that the operating system exposes the required hardware interface.
