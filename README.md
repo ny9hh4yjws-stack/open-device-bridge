@@ -1,244 +1,294 @@
-# Open Device Bridge
+# Open Device Bridge (ODB)
 
-### Connect. Authorize. Interact.
+## Overview
 
-Open Device Bridge (ODB) is a project exploring secure, user-authorized access to physical hardware from modern mobile computers.
+Open Device Bridge (ODB) is a proposed open architecture for allowing users to securely identify, authorize, configure, diagnose, recover, and update firmware on devices they physically own from modern computing platforms such as tablets and phones.
 
-## The problem
+The project began with a simple real-world problem:
 
-Modern tablets such as the iPad have USB-C, substantial computing power, networking, and sophisticated web applications.
+A modern USB-C iPad is powerful enough to perform advanced computing, networking, cloud, and development tasks, yet it may still be unable to directly identify, recover, or flash firmware on common embedded hardware such as an ESP32-S3 device.
 
-Yet many development devices still require a traditional desktop computer simply to identify, configure, recover, or program them.
+ODB asks a broader question:
 
-Our initial reference case exposed this gap:
-
-**iPad → USB-C → Heltec WiFi LoRa 32 V4 / ESP32-S3 → Meshtastic Web Flasher**
-
-The hardware connects and the ESP32-S3 can enter its ROM bootloader, but Safari on iPadOS does not provide the Web Serial transport required by the browser-based flashing workflow.
-
-## The idea
-
-ODB explores a secure architecture:
-
-Connect → Identify → Explain → Authorize → Interact → Revoke
+> Why should a user need to locate a separate conventional computer simply to interact with hardware they physically own?
 
 The goal is not unrestricted USB access.
 
-The operating system remains the security authority. Access should be explicit, scoped, visible, and revocable.
-
-Potential capabilities could include:
-
-- Device identification
-- Diagnostics
-- Serial read/write
-- Configuration
-- Firmware operations with elevated authorization
-
-## First reference implementation
-
-The first target is deliberately narrow:
-
-**iPadOS + USB-C + ESP32-S3**
-
-An initial proof of concept should only:
-
-1. Detect the connected device.
-2. Establish authorized communication.
-3. Synchronize with the ESP32-S3 ROM bootloader.
-4. Identify the chip.
-5. Report diagnostic information.
-
-No flash erase, firmware writing, eFuse modification, or other irreversible operation is required for the first proof of concept.
-
-## Why this matters
-
-ODB could eventually support development and provisioning workflows involving:
-
-ESP32 • Arduino-class hardware • Meshtastic • IoT • robotics • STEM education • amateur radio • field equipment • sensors • laboratory hardware
-
-The long-term objective is simple:
-
-> A secure bridge between the mobile computer people already own and the physical hardware they want to use.
-
-## Project status
-
-**Early concept / architecture stage.**
-
-The project is currently exploring technical feasibility, security architecture, platform APIs, and an ESP32-S3 reference implementation.
-
-Contributions, technical discussion, prior-art references, and platform expertise are welcome.
+The goal is a secure, explicit, operating-system-controlled way for users to authorize specific hardware capabilities.
 
 ---
 
-**Open Device Bridge**
+# Core Problem
 
-*Connect. Authorize. Interact.*
+Modern mobile devices can communicate with:
 
-*ESP32 first. Open hardware next.*
+- cloud services
+- satellites
+- cameras
+- printers
+- vehicles
+- smart-home devices
+- medical and industrial equipment
+- Bluetooth accessories
+- networked embedded systems
+
+Yet direct interaction with locally connected hardware may still be heavily restricted.
+
+A device connected by USB may require access to capabilities such as:
+
+- hardware identification
+- serial communication
+- diagnostics
+- configuration
+- bootloader access
+- firmware flashing
+- recovery mode
+- USB Serial/JTAG
+- vendor-specific maintenance tools
+
+On some operating systems, those capabilities may not be available even when:
+
+- the user physically owns the hardware
+- the user physically connects the device
+- the operation is intentional
+- the computing device has sufficient processing power
+- the connection is technically capable of data transfer
+
+This creates a hardware access gap.
 
 ---
 
-## Broader Architecture
+# Proposed ODB Security Model
 
-The ESP32-S3/iPad experiment is the initial reference case for a broader interoperability problem.
+ODB does not propose unrestricted device access.
 
-Modern computing platforms can communicate with sophisticated external hardware, but access remains fragmented across device classes, proprietary applications, transport-specific workarounds, platform-specific drivers, and vendor ecosystems.
+Instead, it proposes a permission-based architecture:
 
-Comparable device categories include:
+## Connect → Identify → Explain → Authorize → Interact → Revoke
 
-- Arduino and other microcontroller platforms
-- ESP32 and Meshtastic/LoRa hardware
-- Thermal imaging systems such as FLIR
-- OBD-II automotive diagnostic hardware
-- Software-defined radio (SDR)
-- Oscilloscopes and digital multimeters
-- USB microscopes and imaging instruments
-- GNSS/GPS receivers
-- Amateur-radio equipment
-- 3D printers and CNC controllers
-- Robotics and flight controllers
-- Environmental sensors
-- Scientific and laboratory instrumentation
-- Industrial diagnostic and configuration equipment
+### 1. Connect
 
-ODB is therefore being developed not as a workaround for one ESP32 board, but as a general model for secure interaction between computing platforms and user-owned external hardware.
+The user physically connects a device.
 
-## Proposed ODB Model
+### 2. Identify
 
-Open Device Bridge is a proposed operating-system-mediated framework for secure, user-authorized, capability-scoped interaction between computing platforms and user-owned external hardware.
+The operating system determines what the connected hardware is able to expose.
 
-The proposed lifecycle is:
+### 3. Explain
 
-> **Connect → Identify → Explain → Authorize → Interact → Verify → Revoke**
+The system explains what capabilities are being requested.
 
-Physical connection alone does not grant unrestricted access.
+Examples:
 
-Instead, applications request specific capabilities and the operating system remains the enforcement authority.
+- Read device identity
+- Read serial output
+- Write serial commands
+- Modify configuration
+- Access diagnostics
+- Enter bootloader mode
+- Install firmware
 
-Example capabilities may include:
+### 4. Authorize
 
-- `device.identify`
-- `sensor.read`
-- `serial.read`
-- `serial.write`
-- `configuration.read`
-- `configuration.write`
-- `firmware.flash`
-- `recovery`
-- `debug`
-- `radio.control`
-- `diagnostics.read`
-- `machine.control`
+The user explicitly grants permission.
 
-Higher-risk capabilities can require stronger authorization.
+Permissions could be scoped individually.
 
-## Architectural Principles
+### 5. Interact
 
-ODB currently rests on four primary principles:
+The approved application performs only the authorized operations.
 
-**Open** — Hardware access should not automatically depend on a proprietary vendor application.
+### 6. Revoke
 
-**User Authorized** — Physical connection establishes an opportunity to request access, not permission by itself.
+The user or operating system may revoke access at any time.
 
-**Capability Scoped** — Applications receive only the hardware operations required for the authorized task.
+The operating system remains the enforcement authority.
 
-**OS Enforced** — The operating system remains the ultimate authority over access, isolation, revocation, and security policy.
+---
 
-## Transport Independence
+# Reference Case
 
-ODB is intended to describe hardware interaction rather than a single connection technology.
+The original ODB reference case involves:
 
-Potential transports include:
+- iPadOS
+- USB-C
+- Heltec ESP32-S3 hardware
+- Meshtastic firmware
 
-- USB / USB-C
-- Thunderbolt
-- Bluetooth / BLE
-- Wi-Fi
-- Ethernet
-- NFC
-- Future transports
+The objective was straightforward:
 
-The intended abstraction is:
+Identify, configure, recover, or flash firmware on a user-owned ESP32-S3 device using an iPad.
 
-> **Intent → Capability → Authorization → Session → Protocol → Transport**
+The hardware itself is inexpensive and does not require significant computing power.
 
-A user may want to configure, diagnose, program, or recover a device regardless of whether that interaction occurs over USB, Bluetooth, or a network connection.
+The principal obstacle is access to the necessary USB and programming interfaces.
 
-## Core and Profiles
+---
 
-The architecture is expected to separate a small **ODB Core** from composable **ODB Profiles**.
+# Current Evidence
 
-The ODB Core would define concepts such as:
+## Mobile / Tablet Host
 
-- device identity
-- discovery
-- capability negotiation
-- authorization
-- trust
-- sessions
-- verification
-- revocation
-- auditing
-- risk classification
+A modern iPad provides significant computing capability but does not currently expose all of the low-level interfaces required for conventional ESP32 firmware flashing workflows.
 
-Profiles could define domain-specific behavior, including:
+## Conventional Computer Baseline
 
-- Serial Profile
-- Firmware Profile
-- Sensor Profile
-- Imaging Profile
-- Radio Profile
-- Diagnostic Profile
-- Machine-Control Profile
-- Educational Hardware Profile
+A modest Windows, macOS, or Linux computer can perform the same firmware operation.
 
-A single device may expose several profiles.
+Typical requirements include:
 
-For example, an ESP32-based LoRa device could expose identity, serial, firmware, radio, and sensor capabilities without requiring those concepts to be hard-coded into the core specification.
+- USB data capability
+- ESP32-S3 USB Serial/JTAG support
+- Web Serial or native flashing software
+- firmware files
+- drivers where required
 
-## Initial Reference Implementation
+High CPU performance and large amounts of RAM are not necessary.
 
-The first ODB reference implementation will remain deliberately small.
+This suggests that the primary limitation is not computing power.
 
-Initial target:
+It is access to the required hardware interface.
 
-**ESP32-S3 / Heltec hardware**
+---
 
-Initial capabilities:
+# Experimental Approach
 
-- `device.identify`
-- `serial.read`
-- `serial.write`
-- `firmware.flash`
+ODB is being developed through practical experiments.
 
-The existing experiments in this repository document the boundary conditions that motivated this work.
+## Experiment 001
 
-The goal is to determine whether the same security and authorization architecture can later extend to additional hardware classes without weakening platform security.
+Initial iPad / ESP32-S3 interaction and flashing attempt.
 
-## Educational and Long-Term Significance
+## Experiment 002
 
-ODB may have implications beyond developer convenience.
+Investigation of USB, browser, and operating-system restrictions affecting the workflow.
+
+## Experiment 003 — Legacy Windows
+
+Establish a conventional-computer baseline for ESP32-S3 firmware flashing.
+
+This demonstrates that relatively modest hardware can perform the task when the operating system exposes the necessary interfaces.
+
+## Experiment 004 — Raspberry Pi / Linux
+
+Planned comparison using a Raspberry Pi as a Linux host.
+
+This will help separate:
+
+- computing capability
+- hardware requirements
+- operating-system policy
+- USB interface availability
+
+---
+
+# Broader Applications
+
+The ODB concept extends beyond Meshtastic or ESP32 devices.
 
 Potential areas include:
 
-- STEM education
-- maker and Arduino ecosystems
-- field science
-- accessibility hardware
-- vocational and technical education
-- amateur radio
-- repairability
-- device longevity
-- electronic-waste reduction
-- open hardware
-- preservation of locally functional devices after vendor software or cloud services disappear
+## STEM Education
 
-A student, technician, researcher, maker, or device owner should not necessarily require a second class of general-purpose computer solely to identify or safely interact with hardware when their existing computing platform is technically capable of performing the operation.
+Students increasingly use tablets as their primary computers.
 
-ODB does not propose unrestricted hardware access.
+ODB could improve access to:
 
-It proposes a structured security model for hardware access.
+- Arduino
+- ESP32
+- microcontrollers
+- robotics
+- sensors
+- electronics laboratories
+- embedded programming
 
-> **Connection should initiate negotiation — not assumption, unrestricted access, or a dead end.**
+## Repair and Right-to-Repair
 
+Users and technicians may need controlled access to:
 
+- diagnostics
+- firmware
+- configuration
+- recovery tools
+
+without requiring a separate legacy computer.
+
+## Field Equipment
+
+Potential examples include:
+
+- radios
+- environmental sensors
+- scientific instruments
+- GPS equipment
+- thermal imaging systems
+- inspection equipment
+- data loggers
+
+## Industrial and Technical Hardware
+
+Many devices expose serial, USB, or vendor-specific maintenance interfaces.
+
+A secure authorization layer could allow mobile computing devices to become legitimate service and maintenance hosts.
+
+## Accessibility
+
+For some users, a tablet or phone is their primary or only general-purpose computer.
+
+Requiring a second computer creates an unnecessary access barrier.
+
+---
+
+# What ODB Is Not
+
+ODB is not a proposal to:
+
+- bypass operating-system security
+- expose all USB devices automatically
+- give applications unrestricted hardware access
+- remove application sandboxing
+- disable device permissions
+- weaken platform security
+
+ODB assumes the opposite.
+
+The operating system should remain in control.
+
+Access should be:
+
+- explicit
+- visible
+- capability-based
+- revocable
+- sandboxed
+- auditable where appropriate
+
+---
+
+# Design Principle
+
+Physical ownership of hardware should not automatically grant unrestricted software access.
+
+But physical ownership plus explicit user authorization should allow a secure path for legitimate interaction.
+
+ODB proposes that modern operating systems provide that path.
+
+---
+
+# Project Status
+
+Open Device Bridge is currently an exploratory open-source architecture and evidence-gathering project.
+
+The project is using real hardware experiments to document where current systems succeed, where they fail, and what a safer interoperability model might look like.
+
+Contributions, technical criticism, platform-specific observations, security analysis, and experimental results are welcome.
+
+---
+
+# Long-Term Goal
+
+The long-term goal is not merely to create another flashing tool.
+
+The goal is to define a general device-access model that allows modern computers, tablets, and phones to securely interact with user-owned hardware without forcing users back onto older computing platforms.
+
+Open Device Bridge is an attempt to define that missing layer.
