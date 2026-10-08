@@ -196,14 +196,28 @@ Follow-up: Experiment 004 investigates Raspberry Pi/Linux as an alternative hard
 
 ## Experiment 004 — Raspberry Pi / Linux
 
-Planned comparison using a Raspberry Pi as a Linux host.
+Experiment 004 — Raspberry Pi / Linux
 
-This will help separate:
+Status: October 8, 2026 — Initial hardware communication confirmed. Further testing ongoing.
 
-- computing capability
-- hardware requirements
-- operating-system policy
-- USB interface availability
+Objective: Evaluate a Raspberry Pi running Linux as an alternative host for communicating with and managing Heltec ESP32-S3 devices.
+
+Observed results:
+
+* Raspberry Pi assembled and Raspberry Pi OS successfully started.
+* Initial configuration and system reboot completed.
+* Heltec ESP32-S3 connected through USB and recognized.
+* Subsequent Meshtastic radio configuration and field testing performed.
+
+Conclusion:
+
+The Raspberry Pi established a Linux-based hardware access path that was unavailable through our unsuccessful iPadOS and legacy Windows testing workflows.
+
+This supports the ODB investigation into operating-system restrictions, USB interface availability, driver compatibility, and device interoperability.
+
+Successful firmware flashing through the Raspberry Pi and a complete browser-based ODB implementation remain separate milestones requiring verification.
+
+Next steps: Document USB identification, serial communication, firmware flashing, and repeatable test procedures.
 
 ---
 
