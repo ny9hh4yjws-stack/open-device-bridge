@@ -315,3 +315,26 @@ The field study serves as a practical hardware interoperability case study for O
 It demonstrates how device configuration, operating-system restrictions, radio firmware, USB connectivity, and accessible development tools affect real-world embedded-device projects.
 
 The two projects maintain separate documentation while sharing relevant technical findings and development lessons.
+
+October 8, 2026 — Raspberry Pi Experiment 004 Update
+
+The Raspberry Pi / Linux comparison has advanced from planning to initial hands-on testing.
+
+Completed observations:
+
+* Raspberry Pi hardware was assembled and Raspberry Pi OS started successfully.
+* Initial setup, system configuration, and reboot were completed.
+* A Heltec ESP32-S3 Meshtastic device was connected to the Raspberry Pi via USB and recognized.
+* Subsequent Meshtastic radio configuration and field operations were conducted.
+
+These results demonstrate a working Linux-based hardware access path for the test equipment. They do not yet establish a complete browser-based ODB implementation or automated device-management system.
+
+Future Experiment 004 documentation will distinguish USB recognition, firmware flashing, device configuration, and field operation, with separate evidence for each milestone.
+
+Related Project — Missoula Meshtastic Field Study
+
+Missoula Meshtastic Field Study
+
+The companion project documents real-world LoRa mesh communications in Missoula, Montana, including Ronin07 and Shino radio deployments, October 7–8 field tests, message acknowledgments, terrain analysis, antenna placement, and future Raspberry Pi logging experiments.
+
+The Meshtastic study provides an applied hardware and interoperability case study for Open Device Bridge. Both repositories retain their own documentation while linking relevant research findings.
