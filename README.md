@@ -165,9 +165,34 @@ Investigation of USB, browser, and operating-system restrictions affecting the w
 
 ## Experiment 003 — Legacy Windows
 
-Establish a conventional-computer baseline for ESP32-S3 firmware flashing.
+Experiment 003 — Legacy Windows Compatibility
 
-This demonstrates that relatively modest hardware can perform the task when the operating system exposes the necessary interfaces.
+Objective: Determine whether an older Windows computer could communicate with and flash a Heltec ESP32-S3 device after unsuccessful attempts using iPadOS.
+
+Test environment:
+
+* Legacy Windows computer (approximately Windows 8.1)
+* Heltec ESP32-S3
+* USB connection
+* Espressif Flash Download Tool v3.9.11
+* Meshtastic firmware installation workflow
+
+Observed results:
+
+* The computer exhibited partial USB device detection.
+* A functional COM-port connection could not be established.
+* Driver and operating-system compatibility issues obstructed communication.
+* Firmware flashing could not be completed.
+
+Conclusion:
+
+The experiment demonstrated that access to a conventional computer does not automatically guarantee successful embedded-device communication.
+
+Hardware capability, driver availability, operating-system compatibility, and USB interface access must all be considered.
+
+This experiment provided additional motivation for Open Device Bridge (ODB), which aims to simplify device identification, communication, recovery, and firmware installation across platforms.
+
+Follow-up: Experiment 004 investigates Raspberry Pi/Linux as an alternative hardware communication environment.
 
 ## Experiment 004 — Raspberry Pi / Linux
 
