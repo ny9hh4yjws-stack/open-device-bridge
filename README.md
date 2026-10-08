@@ -292,3 +292,26 @@ The long-term goal is not merely to create another flashing tool.
 The goal is to define a general device-access model that allows modern computers, tablets, and phones to securely interact with user-owned hardware without forcing users back onto older computing platforms.
 
 Open Device Bridge is an attempt to define that missing layer.
+
+Related Research: Missoula Meshtastic Field Study
+
+Open Device Bridge (ODB) is associated with an independent, real-world Meshtastic LoRa research project conducted in Missoula, Montana.
+
+Missoula Meshtastic Field Study
+
+The study documents:
+
+* Meshtastic radio configuration and deployment.
+* Real-world RF propagation and terrain effects.
+* Mobile-to-fixed-station communications using Heltec-based radios.
+* Mesh routing, acknowledgments, and coverage testing.
+* Raspberry Pi integration and potential automated logging.
+* Antenna elevation, off-grid operation, and future solar-powered deployments.
+
+Relevance to Open Device Bridge
+
+The field study serves as a practical hardware interoperability case study for ODB.
+
+It demonstrates how device configuration, operating-system restrictions, radio firmware, USB connectivity, and accessible development tools affect real-world embedded-device projects.
+
+The two projects maintain separate documentation while sharing relevant technical findings and development lessons.
