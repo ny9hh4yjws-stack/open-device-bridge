@@ -297,7 +297,7 @@ Related Research: Missoula Meshtastic Field Study
 
 Open Device Bridge (ODB) is associated with an independent, real-world Meshtastic LoRa research project conducted in Missoula, Montana.
 
-Missoula Meshtastic Field Study
+[Missoula Meshtastic Field Study](https://github.com/ny9hh4yjws-stack/missoula-meshtastic-field-study)
 
 The study documents:
 
