@@ -377,3 +377,9 @@ Missoula Meshtastic Field Study
 The companion project documents real-world LoRa mesh communications in Missoula, Montana, including Ronin07 and Shino radio deployments, October 7–8 field tests, message acknowledgments, terrain analysis, antenna placement, and future Raspberry Pi logging experiments.
 
 The Meshtastic study provides an applied hardware and interoperability case study for Open Device Bridge. Both repositories retain their own documentation while linking relevant research findings.
+
+## Additional Case Studies
+
+[Case Study 002 — ChatGPT iOS Conversation Continuity](case-studies/ChatGPT-iOS-Continuity-2026-10-10.md)
+
+This study documents conversation navigation, session persistence, and continuity challenges observed during ODB development.
